@@ -1,0 +1,44 @@
+SET STR=%~1
+SET RES=0
+
+IF %STR:~0,1% == "" (
+	GOTO LBL_END
+)
+
+SET MAX=1
+
+REM MAX の値を決めるループ
+:LBL_LOOP_MAX
+
+CALL SET UNIT=%%STR:~%MAX%,1%%
+IF "%UNIT%" == "" (
+	SET /A MIN=!MAX! / 2
+	GOTO LBL_CHECK_LEN
+)
+
+SET /A MAX=%MAX% * 2
+
+GOTO LBL_LOOP_MAX
+
+REM 文字列の長さを調べるループ
+:LBL_CHECK_LEN
+
+SET /A DISTANCE=%MAX% - %MIN%
+IF %DISTANCE% EQU 1 (
+	SET /A RES=!MIN! + 1
+	GOTO LBL_END
+)
+
+SET /A HF=(%MAX% + %MIN%) / 2
+CALL SET UNIT=%%STR:~%HF%,1%%
+IF "%UNIT%" == "" (
+	SET MAX=!HF!
+) ELSE (
+	SET MIN=!HF!
+)
+
+GOTO LBL_CHECK_LEN
+
+:LBL_END
+
+EXIT /B %RES%

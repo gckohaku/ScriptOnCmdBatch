@@ -1,0 +1,26 @@
+SET /A RADIX= %~1
+SET /A EXP= %~2
+
+SET /A RET= 1
+SET /A MUL= %RADIX%
+
+:POW_LOOP
+
+SET /A LSD_EXP= "EXP & 0x01"
+
+IF %LSD_EXP% EQU 0x01 (
+	SET /A RET= %RET% * %MUL%
+)
+
+SET /A MUL= "%MUL% << 1"
+SET /A EXP= "%EXP% >> 1"
+
+ECHO MUL: %MUL%, RET: %RET%
+
+IF %EXP% NEQ 0 (
+	GOTO POW_LOOP
+)
+
+:END_PROCESS
+
+EXIT /B %RET%

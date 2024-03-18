@@ -12,10 +12,8 @@ IF %LSD_EXP% EQU 0x01 (
 	SET /A RET= %RET% * %MUL%
 )
 
-SET /A MUL= "%MUL% << 1"
+SET /A MUL= "%MUL% * %MUL%"
 SET /A EXP= "%EXP% >> 1"
-
-ECHO MUL: %MUL%, RET: %RET%
 
 IF %EXP% NEQ 0 (
 	GOTO POW_LOOP

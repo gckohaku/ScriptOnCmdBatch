@@ -1,0 +1,5 @@
+SET RET= 0
+
+
+
+EXIT /B %RET%
